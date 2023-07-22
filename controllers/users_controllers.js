@@ -9,9 +9,26 @@ module.exports.likes = function(req,res){
 }
 
 module.exports.profile = function(req,res){
-    return res.render('user_profile',{
-        title : "Home"
-    });
+    if(req.cookies.user_id){
+        User.findById(req.cookies.user_id,
+        )
+        .then(function(user){   
+            if(user){
+                return res.render('user_profile',{
+                    title : "User Profile",
+                    user : user
+                })
+            }
+            else{
+                return res.redirect('/users/sign-in');
+            }
+        })
+        .catch((err) => console.log("Error"));
+
+    }
+    else{
+        return res.redirect('/users/sign-in');
+    }
 }
 
 // Render the Sign Up page
@@ -55,14 +72,37 @@ module.exports.create = function(req,res){
         console.log("Error while finding the user during Sign Up");
         return;
     }) 
-
-
-        
+     
 };
 
 // Get the Sign In Data
 module.exports.createSession = function(req,res){
-    // ToDo Later
+    // Steps to auth
+    // Firstly change the git branch to manual auth from the master branch
+
+    User.findOne({email : req.body.email},
+    )
+    .then(function(user){
+        if(user){
+            // Handle Password doesn't match
+            if(user.password != req.body.password){
+                return res.redirect('back');
+            }
+
+            // Handle Session creation
+            res.cookie('user_id',user.id);
+            return res.redirect('/users/profile');
+        }
+        else{
+            // Handle User Not Found
+            console.log("User Not Found");
+            return res.redirect('back');
+        }
+    })
+    .catch(function(err){
+        console.log("Error while finding the user during Sign In");
+        return;
+    })
 };
 
 
