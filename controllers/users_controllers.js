@@ -12,3 +12,26 @@ module.exports.profile = function(req,res){
     });
 }
 
+// Render the Sign Up page
+module.exports.signUp = function(req,res){
+    return res.render('users_sign_up',{
+        title : "Codiel | Sign-Up"
+    });
+};
+
+// Render the Sign In Page
+module.exports.signIn = function(req,res){
+    return res.render('users_sign_in',{
+        title : "Codiel | Sign-In"
+    });
+};
+
+// Get the Sign Up Data
+module.exports.create = function(req,res){
+    // ToDo Later
+};
+
+// Get the Sign In Data
+module.exports.createSession = function(req,res){
+    // ToDo Later
+};

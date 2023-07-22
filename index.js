@@ -3,6 +3,8 @@ const app = express();
 
 const port = 8000;
 
+
+
 // Using Express Layouts
 const expressLayouts = require('express-ejs-layouts');
 app.use(expressLayouts);
