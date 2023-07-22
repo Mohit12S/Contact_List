@@ -3,6 +3,13 @@ const app = express();
 
 const port = 8000;
 
+// Importing cookie parser
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+// Importing Body Parser to manage Post Requests
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended:false}));
 
 
 // Using Express Layouts
