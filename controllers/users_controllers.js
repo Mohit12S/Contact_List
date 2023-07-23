@@ -16,6 +16,11 @@ module.exports.profile = function(req,res){
 
 // Render the Sign Up page
 module.exports.signUp = function(req,res){
+    // If user is already Signed Up then don't again show signUp page
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
     return res.render('users_sign_up',{
         title : "Codiel | Sign-Up"
     });
@@ -23,6 +28,11 @@ module.exports.signUp = function(req,res){
 
 // Render the Sign In Page
 module.exports.signIn = function(req,res){
+    // If user is already Signed In then don't again show signIn page
+    if(req.isAuthenticated()){
+        return res.redirect('/users/profile');
+    }
+
     return res.render('users_sign_in',{
         title : "Codiel | Sign-In"
     });
@@ -63,6 +73,9 @@ module.exports.create = function(req,res){
 // Get the Sign In Data
 module.exports.createSession = function(req,res){
     // ToDo Later
+    // Session is created in passport.js
+    // If user is authenticated then send it to home page
+    return res.redirect('/');
 };
 
 

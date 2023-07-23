@@ -23,8 +23,11 @@ const db = require('./config/mongoose');
 app.set('layout extractStyles',true);
 app.set('layout extractScripts',true);
 
-// Using Express Router
-app.use('/' , require('./routes'));
+// Adding Passport for session cookie
+const session = require('express-session');
+const passport = require('passport');
+const passportLocal = require('./config/passport-local-strategy');
+const MongoStore = require('connect-mongo');
 
 // Accessing Static files
 app.use(express.static('./assets'));
@@ -34,6 +37,32 @@ app.use(express.static('./assets'));
 // Set Up Views Engine
 app.set('view engine' , 'ejs');
 app.set('views', './views');
+
+app.use(session({
+    name : 'codeial',
+    // ToDo change the secret during deployement
+    secret : 'BlahSomething',
+    saveUninitialized : false,
+    resave : false,
+    cookie : {
+        maxAge : (1000 * 60 * 1000)
+    },
+    store: MongoStore.create(
+        {
+        mongoUrl: 'mongodb://127.0.0.1:27017/codeial_development',
+        autoRemove: 'disabled',
+        }
+    ) 
+}));
+
+// Keep this above the Routes otherwise middleware ka error aata he
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(passport.setAuthenticatedUser);
+
+// Using Express Router
+app.use('/' , require('./routes'));
 
 app.listen(port , function(err){
     if(err){
