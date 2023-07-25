@@ -11,6 +11,18 @@ app.use(cookieParser());
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended:false}));
 
+// Using sass Middleware
+const sassMiddleware = require('node-sass-middleware');
+
+// Keep Sass syntax here because we want all things to load before 
+app.use(sassMiddleware({
+    src : './assets/scss',
+    dest : './assets/css',
+    debug : true,
+    outputStyle : 'extended',
+    prefix : '/css'
+}));
+
 
 // Using Express Layouts
 const expressLayouts = require('express-ejs-layouts');
@@ -19,20 +31,19 @@ app.use(expressLayouts);
 // Connecting to database
 const db = require('./config/mongoose');
 
-// Extract style and scripts from subpages into the layouts
-app.set('layout extractStyles',true);
-app.set('layout extractScripts',true);
-
 // Adding Passport for session cookie
 const session = require('express-session');
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const MongoStore = require('connect-mongo');
 
+// Extract style and scripts from subpages into the layouts
+app.set('layout extractStyles',true);
+app.set('layout extractScripts',true);
+
 // Accessing Static files
-app.use(express.static('./assets'));
-
-
+const path = require('path');
+app.use(express.static(path.join(__dirname,'assets')));
 
 // Set Up Views Engine
 app.set('view engine' , 'ejs');
@@ -71,3 +82,5 @@ app.listen(port , function(err){
 
     console.log(`Server is running on port : ${port}`);
 })
+
+

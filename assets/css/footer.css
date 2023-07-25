@@ -1,0 +1,14 @@
+body {
+  margin: 0px; }
+  body .footer-container {
+    display: flex;
+    background-color: grey;
+    font-weight: 800; }
+    body .footer-container .li-class {
+      list-style: none;
+      text-decoration: none; }
+    body .footer-container .a-class {
+      text-decoration: none;
+      color: black;
+      font-size: larger;
+      margin: 10px; }

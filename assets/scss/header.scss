@@ -1,0 +1,40 @@
+body{
+    margin: 0px;
+
+    .container{
+        display: flex;
+        background-color: #6f92f9;
+        // background-color: black;
+        color: white;
+        justify-content: space-between;
+        height: 7vh;
+
+        .heading{
+            margin-left: 1vw;
+            // position: relative;
+            // top: -10%;
+            margin-top: 5px;
+        }
+    
+        .ul-class{
+            display: flex;
+            color: white;
+            margin-right: 7vw;
+            width: 15%;
+            justify-content: flex-end;
+
+            .li-class{
+                list-style: none;
+                text-decoration: none;
+
+                .a-class{
+                    text-decoration: none;
+                    color: white;
+                    font-size: larger;
+                    margin: 10px;
+                }
+            }
+        }
+
+    }
+}

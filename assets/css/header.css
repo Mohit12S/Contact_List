@@ -1,0 +1,25 @@
+body {
+  margin: 0px; }
+  body .container {
+    display: flex;
+    background-color: #6f92f9;
+    color: white;
+    justify-content: space-between;
+    height: 7vh; }
+    body .container .heading {
+      margin-left: 1vw;
+      margin-top: 5px; }
+    body .container .ul-class {
+      display: flex;
+      color: white;
+      margin-right: 7vw;
+      width: 15%;
+      justify-content: flex-end; }
+      body .container .ul-class .li-class {
+        list-style: none;
+        text-decoration: none; }
+        body .container .ul-class .li-class .a-class {
+          text-decoration: none;
+          color: white;
+          font-size: larger;
+          margin: 10px; }

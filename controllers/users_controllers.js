@@ -79,7 +79,7 @@ module.exports.createSession = function(req,res){
 };
 
 module.exports.destroySession = function(req,res){
-    // This function is given by Passport.js
+    // This function is given by Passport.js req.logout()
     req.logout(function(err){
         if(err){
             console.log(err);

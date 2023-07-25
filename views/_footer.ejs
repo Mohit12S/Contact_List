@@ -1,3 +1,12 @@
 <footer>
-    This is footer
+    <div class="footer-container">
+        <span>@ Copyright Reserved</span>
+
+        <ul>
+            <% if(locals.user){ %>
+                <li class="li-class"><a href="/users/profile" class="a-class"><%= user.name%></a></li>
+                <li class="li-class"><a href="/users/sign-out" class="a-class">Sign Out</a></li>
+            <% } %>
+        </ul>
+    </div>
 </footer>

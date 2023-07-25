@@ -1,0 +1,21 @@
+body{
+    margin: 0px;
+
+    .footer-container{
+        display: flex;
+        background-color: grey;
+        font-weight: 800;
+
+        .li-class{
+            list-style: none;
+            text-decoration: none;
+        }
+
+        .a-class{
+            text-decoration: none;
+            color: black;
+            font-size: larger;
+            margin: 10px;
+        }
+    }
+}
