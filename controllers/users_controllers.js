@@ -9,9 +9,33 @@ module.exports.likes = function(req,res){
 }
 
 module.exports.profile = function(req,res){
-    return res.render('user_profile',{
-        title : "Home"
-    });
+    User.findById(req.params.id,
+    )
+    .then(function(user){
+        return res.render('user_profile',{
+            title : "Home",
+            // We didn't choose name as user as it is already present in locals
+            profile_user : user
+        });
+    })
+    .catch((err) => console.log("Oops we encountered an err while creating a profile user"))
+}
+
+// Updating Our page
+module.exports.update = function(req,res){
+    // Update only when user sending the request and the user who is logged in are the same
+    if(req.user.id == req.params.id){
+        // This is a inbuilt function given by mongoose
+        User.findByIdAndUpdate(req.params.id,req.body,
+        )
+        .then(function(user){
+            return res.redirect('back');
+        })
+        .catch((err) => console.log("oops we got an error while updating the user"))
+    }
+    else{
+        return res.status(401).send('Unauthorized')
+    }
 }
 
 // Render the Sign Up page

@@ -10,7 +10,7 @@
 //     });
 // }
 const Post = require('../models/post');
-const User = require('../models/user');
+const User = require('../models/user')
 module.exports.home = function(req,res){
     Post.find({})
     .populate('user')
@@ -23,10 +23,16 @@ module.exports.home = function(req,res){
     .exec(
     )
     .then(function(posts){
-        return res.render('home',{
-            title : "Codeial | Home",
-            posts : posts
+        User.find({},
+        )
+        .then(function(users){
+            return res.render('home',{
+                title : "Codeial | Home",
+                posts : posts,
+                all_users : users
+            })
         })
+        .catch((err) => console.log("Err while getting users"))
     })
     .catch((err) => console.log("Oops we caught an err"));
 }
