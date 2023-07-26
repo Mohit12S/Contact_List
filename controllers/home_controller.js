@@ -9,31 +9,34 @@
 //         title : "Home"
 //     });
 // }
+
+
 const Post = require('../models/post');
-const User = require('../models/user')
-module.exports.home = function(req,res){
-    Post.find({})
-    .populate('user')
-    .populate({
-        path : 'comments',
-        populate : {
-            path : 'user'
-        }
-    })
-    .exec(
-    )
-    .then(function(posts){
-        User.find({},
-        )
-        .then(function(users){
-            return res.render('home',{
-                title : "Codeial | Home",
-                posts : posts,
-                all_users : users
-            })
+const User = require('../models/user');
+
+// let's Make the code cleaner using async and await
+module.exports.home = async function(req,res){
+    try{
+        let posts = await Post.find({})
+        .populate('user')
+        .populate({
+            path : 'comments',
+            populate : {
+                path : 'user'
+            }
+        });
+        
+        let users = await User.find({});
+            
+        return res.render('home',{
+            title : "Codeial | Home",
+            posts : posts,
+            all_users : users
         })
-        .catch((err) => console.log("Err while getting users"))
-    })
-    .catch((err) => console.log("Oops we caught an err"));
+    }
+    catch(err){
+        console.log('Error',err);
+        return;
+    }
 }
 
