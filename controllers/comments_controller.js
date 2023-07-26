@@ -23,3 +23,25 @@ module.exports.create = function(req,res){
     .catch((err) => console.log("Oops we encountered a error in finding post"));
 }
 
+module.exports.destroy = function(req,res){
+    Comment.findById(req.params.id,
+    )
+    .then(function(comment){
+        if(comment.user == req.user.id){
+            // We can postId from comment as we have defined it in our Schema 
+            let postId = comment.post;
+            Comment.deleteOne();
+
+            Post.findByIdAndUpdate(postId,{$pull : {comments : req.params.id}}
+            )
+            .then((post) =>{return res.redirect('back')})
+            .catch((err) => console.log("Oops we found an err while deleting comment from posts arr",err))
+
+        }
+        else{
+            return res.redirect('back');
+        }
+    })
+    .catch((err) => console.log("Oops we encountered an err while finding comments"))
+}
+
