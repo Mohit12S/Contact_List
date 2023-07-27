@@ -29,6 +29,7 @@ module.exports.update = function(req,res){
         User.findByIdAndUpdate(req.params.id,req.body,
         )
         .then(function(user){
+            req.flash('success','Profile page updated');
             return res.redirect('back');
         })
         .catch((err) => console.log("oops we got an error while updating the user"))
@@ -45,6 +46,7 @@ module.exports.signUp = function(req,res){
         return res.redirect('/users/profile');
     }
 
+    req.flash('success','Sign Up SuccessFully');
     return res.render('users_sign_up',{
         title : "Codiel | Sign-Up"
     });
@@ -57,6 +59,7 @@ module.exports.signIn = function(req,res){
         return res.redirect('/users/profile');
     }
 
+    req.flash('success','Sign In SuccessFully');
     return res.render('users_sign_in',{
         title : "Codiel | Sign-In"
     });
@@ -64,6 +67,8 @@ module.exports.signIn = function(req,res){
 
 // Get the Sign Up Data
 module.exports.create = function(req,res){
+    
+
     if(req.body.password != req.body.confirm_password){
         return res.redirect('back');
     }
@@ -96,6 +101,7 @@ module.exports.create = function(req,res){
 
 // Get the Sign In Data
 module.exports.createSession = function(req,res){
+    req.flash('success','Logged in SuccessFully');
     // ToDo Later
     // Session is created in passport.js
     // If user is authenticated then send it to home page
@@ -104,12 +110,14 @@ module.exports.createSession = function(req,res){
 
 module.exports.destroySession = function(req,res){
     // This function is given by Passport.js req.logout()
+    
     req.logout(function(err){
         if(err){
             console.log(err);
         }
     })
 
+    req.flash('success','Logged Out SuccessFully');
     res.redirect('/');
 }
 

@@ -3,6 +3,8 @@ const app = express();
 
 const port = 8000;
 
+const flash = require('connect-flash');
+
 // Importing cookie parser
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -71,6 +73,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+
+// Using connect flash
+app.use(flash());
+
+const customMware = require('./config/middleware');
+app.use(customMware.setFlash);
 
 // Using Express Router
 app.use('/' , require('./routes'));

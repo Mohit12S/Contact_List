@@ -5,7 +5,7 @@
         <ul class="ul-class">
             <% if(locals.user){ %>
                 <li class="li-class">
-                    <a href="/users/profile" class="a-class"><%= user.name%></a>
+                    <a href="/users/profile/<%= user.id%>" class="a-class"><%= user.name%></a>
                 </li>
     
                 <li class="li-class">

@@ -5,6 +5,7 @@ const passport = require('passport');
 const usersController = require('../controllers/users_controllers');
 
 // Now whenever the url is on user's profile this file will get triggered
+
 router.get('/profile/:id' , passport.checkAuthentication , usersController.profile);
 router.post('/update/:id' , passport.checkAuthentication , usersController.update);
 
