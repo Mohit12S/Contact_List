@@ -47,6 +47,9 @@ app.set('layout extractScripts',true);
 const path = require('path');
 app.use(express.static(path.join(__dirname,'assets')));
 
+// Making the multer upload files available
+app.use('/uploads' , express.static(__dirname + '/uploads'));
+
 // Set Up Views Engine
 app.set('view engine' , 'ejs');
 app.set('views', './views');

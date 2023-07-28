@@ -2,7 +2,10 @@
 //     res.end('<h1>Users Profile</h1>');
 // };
 
+const multer = require('multer');
 const User = require('../models/user');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.likes = function(req,res){
     res.end('<h1>10 Likes</h1>');
@@ -22,17 +25,39 @@ module.exports.profile = function(req,res){
 }
 
 // Updating Our page
-module.exports.update = function(req,res){
+module.exports.update = async function(req,res){
     // Update only when user sending the request and the user who is logged in are the same
     if(req.user.id == req.params.id){
         // This is a inbuilt function given by mongoose
-        User.findByIdAndUpdate(req.params.id,req.body,
-        )
-        .then(function(user){
-            req.flash('success','Profile page updated');
+        try{
+            let user = await User.findByIdAndUpdate(req.params.id);
+            User.uploadedAvatar(req,res,function(err){
+                if(err){
+                    console.log('***MulterError',err);
+                }
+
+                // We separetely wrote user.name and cannot pass req.body in find and update because
+                // It is multiPart form that's why
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if(req.file){
+
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname,'..',user.avatar));
+                    }
+
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+
+                user.save();
+                return res.redirect('back');
+            })
+        }
+        catch{
+            req.flash('error',err);
             return res.redirect('back');
-        })
-        .catch((err) => console.log("oops we got an error while updating the user"))
+        }
     }
     else{
         return res.status(401).send('Unauthorized')
