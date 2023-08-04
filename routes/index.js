@@ -15,4 +15,7 @@ router.use('/comments' , require('./comments'));
 // For any furthur routes access from below
 // router.use('/xyz' , require('./xyz'));
 
+// Adding Routes for api
+router.use('/api' , require('./api'));
+
 module.exports = router;
